@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELYSIUM | MOTORCYCLES</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+    --kawa-green: #66FF00;
+    --dark: #050505;
+    --white: #ffffff;
+}
+
+/* --- RESET Y BASE --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--dark);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+    position: fixed;
+    top: 0; width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 5%;
+    z-index: 1000;
+}
+
+.logo { font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 1.2rem; }
+.logo span { 
+    color: var(--kawa-green); 
+    text-shadow: 0 0 10px rgba(102, 255, 0 , 0.5);
+}
+
+.nav-menu { display: flex; gap: 15px; list-style: none; }
+
+.action-link {
+    text-decoration: none;
+    color: var(--white);
+    font-family: 'Syncopate', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(102, 255, 0, 0.3);
+    transition: 0.4s ease;
+}
+
+.action-link:hover {
+    background: var(--kawa-green);
+    color: #000;
+    box-shadow: 0 0 20px rgba(102, 255, 0, 0.4);
+}
+
+/* --- HERO SECTION --- */
+.moto-hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+    position: relative;
+    background: radial-gradient(circle at 20% 50%, #111 0%, #050505 100%);
+}
+
+.hero-content {
+    z-index: 10;
+    position: relative;
+    padding-left: 5%;
+    margin-top: -10vh;
+}
+
+.moto-title {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 10vw;
+    line-height: 0.85;
+    letter-spacing: -5px;
+    font-style: italic;
+    text-transform: uppercase;
+}
+
+.moto-title span {
+    color: var(--kawa-green);
+    display: block;
+    filter: drop-shadow(0 0 25px rgba(102, 255, 0, 0.4));
+}
+
+.tagline {
+    font-size: 0.7rem;
+    letter-spacing: 15px;
+    margin-top: 20px;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+}
+
+/* --- LA BESTIA PRINCIPAL (FIXED) --- */
+.bike-phantom-wrapper {
+    position: fixed;
+    top: 5%;
+    right: 3%;
+    width: 90vw;
+    height: 70vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.bike-shadow {
+    width: 100%;
+    height: 100%;
+    background: url('img/IMGH2RFRENTE-Photoroom.png') no-repeat right top;
+    background-size: contain;
+    filter: brightness(0.4) contrast(1.4) grayscale(0.2);
+    opacity: 0.9;
+}
+
+/* --- SECCIÓN INFO Y GRILLA --- */
+.info-section {
+    position: relative;
+    width: 100%;
+    background: #000;
+    z-index: 20; /* Asegura que tape la moto fija al bajar */
+    padding: 150px 8%;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 100px;
+    margin-bottom: 300px; /* Más espacio para la animación de entrada */
+    width: 100%;
+}
+
+.info-card {
+    flex: 0 0 55%;
+}
+
+.section-title {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    letter-spacing: -2px;
+}
+
+.section-title span { color: var(--kawa-green); }
+
+.info-card p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    border-left: 3px solid var(--kawa-green);
+    padding-left: 20px;
+}
+
+/* --- MOTOS LATERALES Y ETIQUETAS HUD --- */
+.side-moto-box {
+    flex: 0 0 25%;
+    text-align: right;
+    position: relative;
+}
+
+.side-moto-box img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    filter: drop-shadow(0 0 10px rgba(102, 255, 0, 0.2)) brightness(0.6);
+    transition: all 0.4s ease;
+}
+
+.side-moto-box:hover img {
+    filter: drop-shadow(0 0 25px var(--kawa-green)) brightness(1);
+    transform: scale(1.05);
+}
+
+/* Diseño Sádico de Nombres */
+.moto-label {
+    font-family: 'Syncopate', sans-serif;
+    color: var(--kawa-green);
+    font-size: 0.75rem;
+    margin-top: 20px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    position: relative;
+    display: block;
+}
+
+.moto-label::before {
+    content: 'DATA_SPEC //';
+    font-size: 0.5rem;
+    position: absolute;
+    top: -15px;
+    right: 0;
+    opacity: 0.4;
+}
+
+.moto-label::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: 0;
+    width: 0%; /* Animado por JS o Hover */
+    height: 2px;
+    background: var(--kawa-green);
+    box-shadow: 0 0 10px var(--kawa-green);
+    transition: width 0.8s ease;
+}
+
+.side-moto-box.is-visible .moto-label::after {
+    width: 100%;
+}
+
+/* --- CONTADOR DE RÉCORD --- */
+.record-box {
+    display: inline-block;
+    padding: 20px 40px;
+    border: 2px solid var(--kawa-green);
+    margin: 30px 0;
+    background: rgba(102, 255, 0, 0.05);
+}
+
+.speed-number {
+    font-size: 8rem;
+    font-weight: 900;
+    font-family: 'Syncopate', sans-serif;
+    color: var(--white);
+    display: block;
+    line-height: 1;
+}
+
+.unit {
+    color: var(--kawa-green);
+    letter-spacing: 10px;
+    font-weight: bold;
+}
+
+/* --- CURSOR --- */
+.cursor {
+    width: 20px; 
+    height: 20px; 
+    border: 1px solid var(--kawa-green); 
+    border-radius: 50%;
+    position: fixed; 
+    pointer-events: none; 
+    z-index: 9999;
+    transform: translate(-50%, -50%); /* Crucial para centrarlo con el mouse */
+}
+
+.elite-footer {
+    background: linear-gradient(to top, #000, var(--dark));
+    padding: 60px 0 30px;
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    text-align: center;
+}
+
+.footer-logo {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    letter-spacing: 5px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.social-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.social-icon img {
+    width: 100%;
+    height: auto;
+    filter: grayscale(1) invert(1); /* Las hace blancas y elegantes */
+    transition: all 0.5s ease;
+}
+
+/* EFECTO TOP AL PASAR EL PUNTERO */
+.social-icon:hover {
+    transform: translateY(-10px) rotate(360deg) scale(1.2);
+}
+
+.social-icon:hover img {
+    filter: grayscale(0) invert(0); /* Recuperan su color original */
+}
+
+/* SOMBRAS PERSONALIZADAS POR APP */
+.social-icon.fb:hover {
+    filter: drop-shadow(0 0 15px #1877F2);
+}
+
+.social-icon.ig:hover {
+    filter: drop-shadow(0 0 15px #E4405F);
+}
+
+.copyright {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+}
+
+/*PRELOADER*/
+/* --- PRELOADER SÁDICO --- */
+.preloader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader-text {
+    font-family: 'Syncopate', sans-serif;
+    color: var(--kawa-green);
+    font-size: 1rem;
+    letter-spacing: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid var(--kawa-green);
+}
+
+.loader-bar-container {
+    width: 200px;
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    position: relative;
+}
+
+.loader-bar {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    width: 0%;
+    background: var(--kawa-green);
+    box-shadow: 0 0 15px var(--kawa-green);
+}
+
+/* --- OVERLAY DE ESCANEO (OPCIONAL PERO DE PINGA) --- */
+.scan-line {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, transparent 50%, rgba(102, 255, 0, 0.02) 50%);
+    background-size: 100% 4px;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+.video-cinematic-section {
+    position: relative;
+    width: 100%;
+    height: 80vh; /* Altura de impacto */
+    overflow: hidden;
+    background: #000;
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    filter: saturate(0.8) brightness(0.6) contrast(1.2);
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, #000 0%, transparent 20%, transparent 80%, #000 100%);
+    z-index: 2;
+}
+
+.video-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+}
+
+.video-title {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 5vw;
+    letter-spacing: 15px;
+    opacity: 0.8;
+}
+
+.video-title span {
+    color: var(--kawa-green);
+    text-shadow: 0 0 20px var(--kawa-green);
+}
+
+
+    </style>
+</head>
+<body>
+
+<div class="preloader">
+    <div class="loader-text">CARGANDO MOTORES...</div>
+    <div class="loader-bar-container">
+        <div class="loader-bar"></div>
+    </div>
+</div>
+
+<div class="scan-line"></div>
+
+    <div class="cursor"></div>
+
+    <header class="navbar">
+        <div class="logo">ELYSIUM<span>MOTORS</span></div>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="action-link">HOME</a></li>
+                <li><a href="#" class="action-link" style="border-color: var(--gold);">CATÁLOGO</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="moto-hero">
+        <div class="hero-content">
+            <h1 class="moto-title">SPEED<br><span>FORCE</span></h1>
+            <p class="tagline">DISPLACEMENT OVER SECURITY</p>
+        </div>
+
+        <div class="bike-phantom-wrapper">
+            <div class="bike-shadow"></div>
+        </div>
+    </main>
+
+
+    <section class="info-section">
+    <div class="info-row">
+        <div class="info-card">
+            <h2 class="section-title">INGENIERÍA <span>BRUTAL</span></h2>
+            <p>Las motos de alta cilindrada no son vehículos, son reactores sobre dos ruedas. La relación peso-potencia en una 1000cc puede superar a la de un Fórmula 1.</p>
+            <br>
+            <p>Son generalmente definidas a partir de 500-600 cc y superiores, destacan por su gran potencia, torque elevado y capacidad para viajes largos a altas velocidades.</p>
+            <p>Motor (El Corazón): Se basa en aumentar el volumen de la cámara de combustión (cc) para quemar más aire y gasolina, generando explosiones más potentes y mayor torque, lo que resulta en una aceleración y velocidad superiores. Suelen utilizar configuraciones de 3 o 4 cilindros para maximizar la potencia a altas revoluciones.</p>
+            <br>
+            <p>Gestión Electrónica: Incorporan inyección electrónica avanzada, modos de conducción ajustables, sistemas de frenado de alta gama (ABS), y control de tracción para gestionar la brutal potencia sin perder estabilidad.</p>
+            <br>
+            <p>Aerodinámica y Chasis: Diseñadas para maximizar la estabilidad, utilizando materiales ligeros para mejorar la relación peso-potencia y la agilidad.</p>
+            <br>
+            <p>uspensión y Frenos: Sistemas robustos diseñados para soportar el rendimiento y garantizar el control a alta velocidad. </p>
+        </div>
+        <div class="side-moto-box">
+            <img src="img/IMGMT09.jpg" alt="Yamaha mt09">
+            <div class="moto-label">YAMAHA MT-09</div>
+        </div>
+    </div>
+
+    <div class="info-row">
+        <div class="info-card">
+            <h2 class="section-title">EL <span>OLIMPO</span> MECÁNICO</h2>
+            <p>Las motocicletas más rápidas del mundo alcanzan velocidades superiores a los 400 km/h, destacando la Kawasaki Ninja H2R, la MTT 420RR y la Dodge Tomahawk. Estas máquinas utilizan motores turboalimentados o turbinas de helicóptero para dominar rectas extremas.</p>
+            <br>
+            <p>Las motocicletas más utilizadas en competencias de alto nivel (Superbike/MotoGP) incluyen la Ducati Panigale V4 SP2, Yamaha R1M, Honda CBR1000RR-R Fireblade SP, y la BMW M 1000 RR. Para motocross y competiciones de agilidad, destacan modelos como la Yamaha YZ85 y opciones de alto rendimiento de KTM. Estas máquinas dominan por su potencia, tecnología avanzada y maniobrabilidad en pista. </p>
+            <br>
+            <p>Superbikes y Pista: La Ducati Panigale V4 R, Aprilia RSV4 Factory, y la Kawasaki Ninja H2 Carbon son reconocidas por su potencia extrema. La Yamaha R1 YZF es destacada por alcanzar velocidades de hasta 297 km/h.</p>
+            <br>
+            <p>Motocross y Todo Terreno: KTM es líder en campeonatos de Motocross/Trail. La Yamaha YZ85 es muy utilizada por su agilidad en competencias de tierra.</p>
+            <br>
+            <p>Competencia/Uso Mixto (Supermotard): La Toro Red 250 en su versión supermotard es popular por su estabilidad y control.</p>
+            <br>
+            <p>Deportivas asequibles: Modelos como la Honda CBR600RR y la Kawasaki Ninja ZX-6R son opciones comunes para entusiastas y competiciones menores. </p>
+        </div>
+        <div class="side-moto-box">
+            <img src="img/IMGBMWS1000RR.jpg" alt="BMW S1000RR">
+            <div class="moto-label">BMW S1000RR</div>
+        </div>
+    </div>
+
+    <div class="info-row highlight-row">
+        <div class="info-card highlight-card">
+            <h2 class="section-title">LÍMITE <span>TERMINAL</span></h2>
+            <div class="record-box">
+                <span class="speed-number">400</span>
+                <span class="unit">KM/H</span>
+            </div>
+            <p>La velocidad máxima oficial registrada en una moto de producción es de 400km/h, lograda por Kenan Sofuoglu en el puente Osman Gazi con una Kawasaki Ninja H2R de 310 CV.</p>
+        </div>
+        <div class="side-moto-box">
+            <img src="img/IMGHAYABUSA.jpg" alt="Suzuki Hayabusa">
+            <div class="moto-label">SUZUKI HAYABUSA</div>
+        </div>
+    </div>
+</section>
+
+<section class="video-cinematic-section">
+    <div class="video-overlay"></div>
+    <video autoplay muted loop playsinline poster="img/fallback-image.jpg" class="hero-video">
+        <source src="vid/clipmotos.mp4" type="video/mp4">
+        Tu navegador no soporta videos.
+    </video>
+    <div class="video-content">
+        <h2 class="video-title">PURE<span>ADRENALINE</span></h2>
+    </div>
+</section>
+
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+document.addEventListener("DOMContentLoaded", () => {
+    const preloader = document.querySelector(".preloader");
+    const loaderBar = document.querySelector(".loader-bar");
+    const cursor = document.querySelector(".cursor");
+    const shadow = document.querySelector(".bike-shadow");
+    const wrapper = document.querySelector(".bike-phantom-wrapper");
+    const title = document.querySelector(".hero-content");
+
+    // 1. PRELOADER Y ENTRADA INICIAL
+    const entryTL = gsap.timeline();
+    entryTL.to(loaderBar, { width: "100%", duration: 1.2, ease: "power2.inOut" });
+    entryTL.to(preloader, { 
+        yPercent: -100, 
+        duration: 0.8, 
+        ease: "expo.inOut",
+        onComplete: () => {
+            preloader.style.display = "none";
+            initHeroScroll(); // Arrancamos el scroll después del preloader
+        }
+    });
+
+    // 2. SEGUIMIENTO DEL CURSOR
+    window.addEventListener("mousemove", (e) => {
+        gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+        if (wrapper) {
+            const xPct = (e.clientX / window.innerWidth - 0.5);
+            const yPct = (e.clientY / window.innerHeight - 0.5);
+            gsap.to(wrapper, { x: xPct * 30, y: yPct * 15, duration: 1 });
+        }
+    });
+
+    // 3. FUNCIÓN MAESTRA DE DESVANECIMIENTO (SUAVE Y REVERSIBLE)
+    function initHeroScroll() {
+        // Creamos un solo Timeline para controlar todo el Hero al unísono
+        const heroExitTL = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".info-section", // Cuando esta sección sube...
+                start: "top bottom",      // ...desde el fondo de la pantalla
+                end: "top 20%",           // ...hasta casi el tope
+                scrub: 1.5,               // Suavidad pura
+                toggleActions: "play reverse play reverse",
+                onUpdate: (self) => {
+                    // Si volvemos al inicio (progreso 0), forzamos limpieza
+                    if (self.progress === 0) {
+                        gsap.set([wrapper, title], { clearProps: "all" });
+                    }
+                }
+            }
+        });
+
+        heroExitTL
+            .to(title, {
+                opacity: 0,
+                y: -80,
+                filter: "blur(15px)", // El blur se va intensificando
+                scale: 0.9,
+                ease: "none"
+            }, 0)
+            .to(wrapper, {
+                opacity: 0,
+                y: -50,
+                scale: 0.8,
+                filter: "blur(30px)", // La moto se funde a negro y borroso
+                ease: "none"
+            }, 0);
+    }
+
+    // 4. ANIMACIÓN DE LAS FILAS DE INFORMACIÓN
+    gsap.utils.toArray(".info-row").forEach((row) => {
+        const card = row.querySelector(".info-card");
+        const motoBox = row.querySelector(".side-moto-box");
+        const label = row.querySelector(".moto-label");
+
+        gsap.from([card, motoBox], {
+            scrollTrigger: {
+                trigger: row,
+                start: "top 85%",
+                toggleActions: "play none none reverse",
+                onEnter: () => motoBox.classList.add("is-visible"),
+                onLeaveBack: () => motoBox.classList.remove("is-visible")
+            },
+            opacity: 0,
+            x: (i) => i === 0 ? -100 : 100,
+            filter: "blur(20px)",
+            duration: 1.5,
+            ease: "power4.out"
+        });
+    });
+
+    // 5. CONTADOR
+    const speedNum = document.querySelector(".speed-number");
+    if (speedNum) {
+        gsap.from(speedNum, {
+            scrollTrigger: { trigger: ".record-box", start: "top 90%" },
+            innerHTML: 0,
+            duration: 3,
+            snap: { innerHTML: 1 },
+            ease: "power1.out"
+        });
+    }
+});
+
+// Efecto Parallax para el video
+gsap.to(".hero-video", {
+    scrollTrigger: {
+        trigger: ".video-cinematic-section",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true
+    },
+    yPercent: 20, // El video se mueve más lento que el scroll
+    ease: "none"
+});
+    </script>
+
+<footer class="elite-footer">
+        <div class="footer-content">
+        <div class="footer-logo">ELYSIUM<span>MOTORS</span></div>
+        
+            <div class="social-links">
+                <a href="https://facebook.com/gianderson.castillo.9" target="_blank" class="social-icon fb">
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+                </a>
+                <a href="https://instagram.com/shoeg4ze_" target="_blank" class="social-icon ig">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+                </a>
+            </div>
+        
+            <p class="copyright">&copy; 2026 ELYSIUM MOTORS. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
