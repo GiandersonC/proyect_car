@@ -52,7 +52,7 @@ body {
     font-size: 0.6rem;
     letter-spacing: 2px;
     padding: 12px 22px;
-    border: 1px solid rgba(212, 175, 55, 0.2); /* Borde dorado sutil */
+    border: 1px solid rgba(212, 175, 55, 0.2); 
     background: rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(12px);
     display: inline-flex;
@@ -70,7 +70,7 @@ body {
     transition: transform 0.3s ease;
 }
 
-/* Efecto Hover Pro */
+/* Efecto Hover Pro B) */
 .action-link:hover {
     background: rgba(212, 175, 55, 0.08);
     border-color: var(--gold);
@@ -85,7 +85,7 @@ body {
     transform: scale(1.2);
 }
 
-/* Línea decorativa inferior (opcional para estilo top) */
+/* Línea decorativa inferior */
 .action-link::after {
     content: '';
     position: absolute;
@@ -110,7 +110,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative; /* Cambiado */
+    position: relative; 
     z-index: 10;
 }
 
@@ -146,12 +146,11 @@ body {
     display: flex;
     width: 100%;
     height: 100%;
-    /* El movimiento suave se maneja aquí o vía GSAP */
     will-change: transform;
 }
 
 .item-car {
-    min-width: 100vw; /* Cada auto ocupa una pantalla completa */
+    min-width: 100vw; 
     height: 100vh;
     display: flex;
     justify-content: center;
